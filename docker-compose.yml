@@ -1,0 +1,16 @@
+services:
+  db:
+    image: postgres:16
+    container_name: firmeza_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: firmeza_db
+      POSTGRES_USER: firmeza_user
+      POSTGRES_PASSWORD: firmeza_pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

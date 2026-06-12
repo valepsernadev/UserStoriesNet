@@ -1,0 +1,21 @@
+@page "{id:int}"
+@model Firmeza.Admin.Pages.Clients.DeleteModel
+@{
+    ViewData["Title"] = "Eliminar Cliente";
+}
+
+<div class="max-w-lg bg-white rounded-xl shadow p-8">
+    <p class="text-lg text-gray-700 mb-2">¿Estás segura de que deseas eliminar este cliente?</p>
+    <p class="text-xl font-bold text-gray-900 mb-6">@Model.Client?.FullName</p>
+
+    <form method="post" class="flex gap-4">
+        <button type="submit"
+                class="bg-red-600 text-white px-6 py-3 rounded-lg text-base hover:bg-red-500 transition">
+            Sí, eliminar
+        </button>
+        <a href="/Clients"
+           class="bg-gray-200 text-gray-700 px-6 py-3 rounded-lg text-base hover:bg-gray-300 transition">
+            Cancelar
+        </a>
+    </form>
+</div>

@@ -29,7 +29,7 @@ public class CreateModel(IProductService productService) : PageModel
       });
       return RedirectToPage("/Products/Index");
     }
-    catch (DbUpdateException ex)
+    catch (DbUpdateException)
     {
       ModelState.AddModelError(string.Empty, "Error al guardar el producto.");
       return Page();

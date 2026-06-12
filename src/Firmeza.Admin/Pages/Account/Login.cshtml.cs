@@ -39,7 +39,7 @@ public class LoginModel(SignInManager<IdentityUser> signInManager) : PageModel
       ErrorMessage = "Credenciales incorrectas. Verifica tu email y contraseña.";
       return Page();
     }
-    catch (Exception ex)
+    catch (Exception)
     {
       ErrorMessage = "Ocurrió un error al iniciar sesión. Intenta nuevamente.";
       return Page();

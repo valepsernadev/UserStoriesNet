@@ -2,4 +2,7 @@
   <Folder Name="/src/">
     <Project Path="src/Firmeza.Admin/Firmeza.Admin.csproj" />
   </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Firmeza.Tests/Firmeza.Tests.csproj" />
+  </Folder>
 </Solution>

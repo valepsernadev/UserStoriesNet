@@ -1,0 +1,63 @@
+﻿@page
+@model Firmeza.Admin.Pages.Products.IndexModel
+@{
+    ViewData["Title"] = "Productos";
+}
+
+<div class="flex justify-between items-center mb-6">
+    <form method="get" class="flex gap-3">
+        <input type="text" name="search" value="@Model.Search"
+               placeholder="Buscar producto..."
+               class="border border-gray-300 rounded-lg px-4 py-2 text-base w-72 focus:outline-none focus:ring-2 focus:ring-gray-400" />
+        <button type="submit"
+                class="bg-gray-800 text-white px-5 py-2 rounded-lg text-base hover:bg-gray-700 transition">
+            Buscar
+        </button>
+    </form>
+    <a href="/Products/Create"
+       class="bg-green-600 text-white px-5 py-2 rounded-lg text-base hover:bg-green-500 transition">
+        + Nuevo Producto
+    </a>
+</div>
+
+<div class="bg-white rounded-xl shadow overflow-hidden">
+    <table class="w-full text-base">
+        <thead class="bg-gray-800 text-white">
+            <tr>
+                <th class="px-6 py-4 text-left">Nombre</th>
+                <th class="px-6 py-4 text-left">Descripción</th>
+                <th class="px-6 py-4 text-left">Precio</th>
+                <th class="px-6 py-4 text-left">Stock</th>
+                <th class="px-6 py-4 text-left">Estado</th>
+                <th class="px-6 py-4 text-left">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in Model.Products)
+            {
+                <tr class="border-b hover:bg-gray-50 transition">
+                    <td class="px-6 py-4 font-medium">@product.Name</td>
+                    <td class="px-6 py-4 text-gray-500">@product.Description</td>
+                    <td class="px-6 py-4">$@product.Price.ToString("N2")</td>
+                    <td class="px-6 py-4">@product.Stock</td>
+                    <td class="px-6 py-4">
+                        @if (product.IsActive)
+                        {
+                            <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm">Activo</span>
+                        }
+                        else
+                        {
+                            <span class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-sm">Inactivo</span>
+                        }
+                    </td>
+                    <td class="px-6 py-4 flex gap-3">
+                        <a href="/Products/Edit/@product.Id"
+                           class="text-blue-600 hover:underline text-base">Editar</a>
+                        <a href="/Products/Delete/@product.Id"
+                           class="text-red-600 hover:underline text-base">Eliminar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

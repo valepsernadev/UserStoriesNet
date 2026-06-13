@@ -21,7 +21,10 @@ public class DeleteModel(IClientService clientService) : PageModel
 
   public async Task<IActionResult> OnPostAsync(int id)
   {
+    var client = await clientService.GetByIdAsync(id);
+    var name = client?.FullName ?? "Cliente";
     await clientService.DeleteAsync(id);
+    TempData["Success"] = $"Cliente \"{name}\" eliminado correctamente.";
     return RedirectToPage("/Clients/Index");
   }
 }

@@ -27,6 +27,7 @@ public class EditModel(IClientService clientService) : PageModel
       return Page();
 
     await clientService.UpdateAsync(Client);
+    TempData["Success"] = $"Cliente \"{Client.FullName}\" actualizado correctamente.";
     return RedirectToPage("/Clients/Index");
   }
 }

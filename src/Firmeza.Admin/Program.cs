@@ -3,6 +3,7 @@ using Firmeza.Admin.Interfaces;
 using Firmeza.Admin.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using OfficeOpenXml;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 // Scopes
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IClientService, ClientService>();
+builder.Services.AddScoped<IExcelImportService, ExcelImportService>();
 
 
 // Identity configuration 
@@ -42,6 +44,8 @@ builder.Services.AddAuthorization(options =>
 {
   options.AddPolicy("AdminOnly", policy => policy.RequireRole("Administrador"));
 });
+
+ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
 var app = builder.Build();
 

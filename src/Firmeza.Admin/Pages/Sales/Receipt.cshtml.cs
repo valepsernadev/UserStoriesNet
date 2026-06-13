@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Firmeza.Admin.Pages.Sales;
 
-public class ReceiptModel(ISaleService saleService, IPdfService pdfService) : PageModel
+public class ReceiptModel(ISaleService saleService, IPdfService pdfService, IWebHostEnvironment env) : PageModel
 {
   public async Task<IActionResult> OnGetAsync(int id)
   {
@@ -30,6 +30,12 @@ public class ReceiptModel(ISaleService saleService, IPdfService pdfService) : Pa
     };
 
     var pdf = pdfService.GenerateReceipt(receiptData);
-    return File(pdf, "application/pdf", $"recibo-{sale.Id}.pdf");
+
+    var fileName = $"recibo-{sale.Id}-{sale.SaleDate:yyyyMMdd}.pdf";
+    var folder = Path.Combine(env.WebRootPath, "recibos");
+    Directory.CreateDirectory(folder);
+    await System.IO.File.WriteAllBytesAsync(Path.Combine(folder, fileName), pdf);
+
+    return File(pdf, "application/pdf", fileName);
   }
 }

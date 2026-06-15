@@ -22,7 +22,10 @@ public class DeleteModel(IProductService productService) : PageModel
 
   public async Task<IActionResult> OnPostAsync(int id)
   {
+    var product = await productService.GetByIdAsync(id);
+    var name = product?.Name ?? "Producto";
     await productService.DeleteAsync(id);
+    TempData["Success"] = $"Producto \"{name}\" eliminado correctamente.";
     return RedirectToPage("/Products/Index");
   }
 }

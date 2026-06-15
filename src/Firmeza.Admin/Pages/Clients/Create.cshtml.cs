@@ -24,6 +24,7 @@ public class CreateModel(IClientService clientService) : PageModel
       Phone = Client.Phone
     });
 
+    TempData["Success"] = $"Cliente \"{Client.FullName}\" creado correctamente.";
     return RedirectToPage("/Clients/Index");
   }
 }

@@ -22,6 +22,9 @@ public class ClientService(ApplicationDbContext db) : IClientService
   public async Task<Client?> GetByIdAsync(int id) =>
     await db.Clients.FirstOrDefaultAsync(c => c.Id == id && c.DeletedAt == null);
 
+  public async Task<Client?> GetByEmailAsync(string email) =>
+    await db.Clients.FirstOrDefaultAsync(c => c.Email == email && c.DeletedAt == null);
+
   public async Task CreateAsync(Client client)
   {
     db.Clients.Add(client);

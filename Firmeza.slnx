@@ -1,6 +1,7 @@
 <Solution>
   <Folder Name="/src/">
     <Project Path="src/Firmeza.Admin/Firmeza.Admin.csproj" />
+    <Project Path="src/Firmeza.API/Firmeza.API.csproj" />
   </Folder>
   <Folder Name="/tests/">
     <Project Path="tests/Firmeza.Tests/Firmeza.Tests.csproj" />

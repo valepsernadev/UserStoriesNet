@@ -27,6 +27,7 @@ public class CreateModel(IProductService productService) : PageModel
         Price = Product.Price,
         Stock = Product.Stock
       });
+      TempData["Success"] = $"Producto \"{Product.Name}\" creado correctamente.";
       return RedirectToPage("/Products/Index");
     }
     catch (DbUpdateException)

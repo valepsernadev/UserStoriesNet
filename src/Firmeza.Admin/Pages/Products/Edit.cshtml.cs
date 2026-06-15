@@ -28,6 +28,7 @@ public class EditModel(IProductService productService) : PageModel
       return Page();
 
     await productService.UpdateAsync(Product);
+    TempData["Success"] = $"Producto \"{Product.Name}\" actualizado correctamente.";
     return RedirectToPage("/Products/Index");
   }
 }

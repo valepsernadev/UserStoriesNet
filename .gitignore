@@ -4,9 +4,11 @@
 ## Get latest from `dotnet new gitignore`
 
 .claude
+.CLAUDE.md
 
 # dotenv files
 .env
+.env.local
 
 # User-specific files
 *.rsuser

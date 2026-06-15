@@ -1,0 +1,86 @@
+﻿@page
+@model Firmeza.Admin.Pages.Sales.CreateModel
+@{
+    ViewData["Title"] = "Nueva Venta";
+}
+
+<div class="max-w-3xl bg-white rounded-xl shadow p-8">
+    @if (!ViewData.ModelState.IsValid && ViewData.ModelState.Values.Any(v => v.Errors.Count > 0))
+    {
+        <div class="mb-5 bg-red-50 border border-red-300 text-red-700 rounded-lg px-5 py-4 text-base">
+            <ul class="list-disc list-inside space-y-1">
+                @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    <li>@error.ErrorMessage</li>
+                }
+            </ul>
+        </div>
+    }
+    <form method="post" class="space-y-6">
+        <div>
+            <label class="block text-base font-medium text-gray-700 mb-1">Cliente</label>
+            <select asp-for="ClientId" asp-items="Model.ClientOptions"
+                    class="w-full border border-gray-300 rounded-lg px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-gray-400">
+                <option value="">Selecciona un cliente</option>
+            </select>
+            <span asp-validation-for="ClientId" class="text-red-500 text-sm"></span>
+        </div>
+
+        <div>
+            <label class="block text-base font-medium text-gray-700 mb-2">Productos</label>
+            <div id="items" class="space-y-3">
+                <div class="flex gap-3 items-center">
+                    <select name="Items[0].ProductId"
+                            class="flex-1 border border-gray-300 rounded-lg px-4 py-3 text-base focus:outline-none">
+                        <option value="">Selecciona un producto</option>
+                        @foreach (var p in Model.ProductOptions)
+                        {
+                            <option value="@p.Value">@p.Text</option>
+                        }
+                    </select>
+                    <input type="number" name="Items[0].Quantity" value="1" min="1"
+                           class="w-28 border border-gray-300 rounded-lg px-4 py-3 text-base focus:outline-none" />
+                </div>
+            </div>
+            <button type="button" onclick="addItem()"
+                    class="mt-3 text-blue-600 text-base hover:underline">
+                + Agregar producto
+            </button>
+        </div>
+
+        <div class="flex gap-4 pt-2">
+            <button type="submit"
+                    class="bg-green-600 text-white px-6 py-3 rounded-lg text-base hover:bg-green-500 transition">
+                Registrar venta
+            </button>
+            <a href="/Sales"
+               class="bg-gray-200 text-gray-700 px-6 py-3 rounded-lg text-base hover:bg-gray-300 transition">
+                Cancelar
+            </a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+<script>
+    let index = 1;
+    const productOptions = `@Html.Raw(string.Join("", Model.ProductOptions.Select(p => $"<option value='{p.Value}'>{p.Text}</option>")))`;
+
+    function addItem() {
+        const container = document.getElementById('items');
+        const div = document.createElement('div');
+        div.className = 'flex gap-3 items-center';
+        div.innerHTML = `
+            <select name="Items[${index}].ProductId" class="flex-1 border border-gray-300 rounded-lg px-4 py-3 text-base focus:outline-none">
+                <option value="">Selecciona un producto</option>
+                ${productOptions}
+            </select>
+            <input type="number" name="Items[${index}].Quantity" value="1" min="1"
+                   class="w-28 border border-gray-300 rounded-lg px-4 py-3 text-base focus:outline-none" />
+            <button type="button" onclick="this.parentElement.remove()" class="text-red-500 hover:underline text-base">Quitar</button>
+        `;
+        container.appendChild(div);
+        index++;
+    }
+</script>
+}

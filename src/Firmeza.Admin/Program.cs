@@ -4,6 +4,9 @@ using Firmeza.Admin.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using OfficeOpenXml;
+using QuestPDF.Infrastructure;
+
+//Credenciales admin -> admin@firmeza.com / Admin123!
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,7 +26,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IClientService, ClientService>();
 builder.Services.AddScoped<IExcelImportService, ExcelImportService>();
-
+builder.Services.AddScoped<IExcelExportService, ExcelExportService>();
+builder.Services.AddScoped<IPdfService, PdfService>();
+builder.Services.AddScoped<ISaleService, SaleService>();
 
 // Identity configuration 
 builder.Services.AddDefaultIdentity<IdentityUser>(options =>
@@ -45,7 +50,9 @@ builder.Services.AddAuthorization(options =>
   options.AddPolicy("AdminOnly", policy => policy.RequireRole("Administrador"));
 });
 
+// paquetes de importacion de archivos
 ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+QuestPDF.Settings.License = LicenseType.Community;
 
 var app = builder.Build();
 

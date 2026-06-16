@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using OfficeOpenXml;
 using QuestPDF.Infrastructure;
 
-//Credenciales admin -> admin@firmeza.com / Admin123!
+//Credenciales admin -> admin@firmeza.com / 
 
 var builder = WebApplication.CreateBuilder(args);
 

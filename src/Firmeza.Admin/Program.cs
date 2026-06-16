@@ -75,7 +75,9 @@ app.MapRazorPages();
 
 using (var scope = app.Services.CreateScope())
 {
-  await DbSeeder.SeedAsync(scope.ServiceProvider);
+    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    db.Database.Migrate();
+    await DbSeeder.SeedAsync(scope.ServiceProvider);
 }
 
 app.Run();

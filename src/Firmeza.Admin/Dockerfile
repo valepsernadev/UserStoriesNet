@@ -1,0 +1,28 @@
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
+
+WORKDIR /app
+
+COPY Firmeza.slnx ./
+COPY src/Firmeza.Admin/Firmeza.Admin.csproj src/Firmeza.Admin/
+COPY src/Firmeza.API/Firmeza.API.csproj src/Firmeza.API/
+COPY tests/Firmeza.Tests/Firmeza.Tests.csproj tests/Firmeza.Tests/
+
+RUN dotnet restore
+
+COPY . .
+
+RUN dotnet publish src/Firmeza.Admin/Firmeza.Admin.csproj \
+    -c Release -o /app/publish \
+    /p:ErrorOnDuplicatePublishOutputFiles=false
+
+FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS runtime
+
+WORKDIR /app
+
+COPY --from=build /app/publish .
+
+EXPOSE 8080
+
+ENV ASPNETCORE_URLS=http://+:8080
+
+ENTRYPOINT ["dotnet", "Firmeza.Admin.dll"]

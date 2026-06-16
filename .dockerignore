@@ -1,0 +1,8 @@
+**/bin/
+**/obj/
+**/.vs/
+src/Firmeza.Client/node_modules/
+src/Firmeza.Client/dist/
+src/Firmeza.Client/.env.local
+.git/
+.idea/
